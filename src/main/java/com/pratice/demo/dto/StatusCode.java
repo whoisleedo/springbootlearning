@@ -1,4 +1,4 @@
-package com.pratice.demo.vo;
+package com.pratice.demo.dto;
 
 public enum StatusCode {
     OK(1),

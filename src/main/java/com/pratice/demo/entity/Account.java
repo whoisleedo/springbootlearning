@@ -9,15 +9,15 @@ import javax.persistence.*;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id" , nullable = false)
     private Long id;
-    @NonNull
-    @Column(name = "user_account")
+    @Column(name = "user_account" , nullable = false)
     private String userAccount;
     @NonNull
-    @Column(name = "password")
+    @Column(name = "password",nullable = false)
     private String password;
     @NonNull
-    @Column(name = "name")
+    @Column(name = "name",nullable = false)
     private String name;
     @Column(name = "email")
     private String email;

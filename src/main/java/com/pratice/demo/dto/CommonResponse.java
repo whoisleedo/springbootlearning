@@ -1,4 +1,4 @@
-package com.pratice.demo.vo;
+package com.pratice.demo.dto;
 
 public class CommonResponse {
     private Integer status;
