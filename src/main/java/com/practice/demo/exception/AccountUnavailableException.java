@@ -1,4 +1,4 @@
-package com.pratice.demo.exception;
+package com.practice.demo.exception;
 
 public class AccountUnavailableException extends Exception{
     public AccountUnavailableException(String message) {

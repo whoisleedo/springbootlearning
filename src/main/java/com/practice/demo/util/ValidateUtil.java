@@ -1,4 +1,4 @@
-package com.pratice.demo.util;
+package com.practice.demo.util;
 
 import java.util.regex.Pattern;
 

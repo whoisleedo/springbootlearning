@@ -1,4 +1,4 @@
-package com.pratice.demo.configuration;
+package com.practice.demo.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +20,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .antMatchers("/api/users/**").permitAll()
+                .antMatchers("/api/user/**").permitAll()
+                .antMatchers("/api/login").permitAll()
+                .anyRequest().authenticated()
                 .and().cors()
                 .and().csrf().disable();
 

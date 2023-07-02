@@ -1,9 +1,9 @@
-package com.pratice.demo.sevice;
+package com.practice.demo.sevice;
 
-import com.pratice.demo.dto.AccountDto;
-import com.pratice.demo.dto.UserDto;
-import com.pratice.demo.entity.Account;
-import com.pratice.demo.entity.repository.AccountRepository;
+import com.practice.demo.dto.UserDto;
+import com.practice.demo.entity.Account;
+import com.practice.demo.entity.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,7 +12,7 @@ import java.util.Optional;
 public class UserService {
 
     private final AccountRepository accountRepository;
-
+    @Autowired
     public UserService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }

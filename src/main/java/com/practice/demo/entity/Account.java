@@ -1,4 +1,4 @@
-package com.pratice.demo.entity;
+package com.practice.demo.entity;
 
 import org.springframework.lang.NonNull;
 

@@ -1,4 +1,4 @@
-package com.pratice.demo;
+package com.practice.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
