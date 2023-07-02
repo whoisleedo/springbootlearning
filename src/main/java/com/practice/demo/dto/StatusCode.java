@@ -1,4 +1,4 @@
-package com.pratice.demo.dto;
+package com.practice.demo.dto;
 
 public enum StatusCode {
     OK(1),

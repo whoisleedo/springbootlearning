@@ -1,9 +1,9 @@
-package com.pratice.demo.sevice;
+package com.practice.demo.sevice;
 
-import com.pratice.demo.entity.Account;
-import com.pratice.demo.entity.repository.AccountRepository;
-import com.pratice.demo.exception.AccountUnavailableException;
-import com.pratice.demo.dto.AccountDto;
+import com.practice.demo.entity.Account;
+import com.practice.demo.entity.repository.AccountRepository;
+import com.practice.demo.exception.AccountUnavailableException;
+import com.practice.demo.dto.AccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

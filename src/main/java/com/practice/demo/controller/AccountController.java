@@ -1,6 +1,6 @@
-package com.pratice.demo.controller;
+package com.practice.demo.controller;
 
-import com.pratice.demo.sevice.UserService;
+import com.practice.demo.sevice.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
