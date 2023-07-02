@@ -1,6 +1,6 @@
 package com.practice.demo.configuration;
 
-import com.practice.demo.security.JwtFilter;
+import com.practice.demo.filter.JwtAuthenticateFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,10 +21,10 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/login").permitAll()
-                .antMatchers("/api/users/register").permitAll()
+                .antMatchers(JwtAuthenticateFilter.LOGIN_PATH).permitAll()
+                .antMatchers(JwtAuthenticateFilter.REGISTER_PATH).permitAll()
                 .anyRequest().authenticated()
-                .and().addFilterAfter(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .and().addFilterBefore(new JwtAuthenticateFilter(), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors().and().csrf().disable();
 

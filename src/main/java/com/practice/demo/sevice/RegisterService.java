@@ -44,7 +44,6 @@ public class RegisterService {
 
         Account entity = new Account();
         entity.setUserAccount(account);
-        //todo password need  crypt
         entity.setPassword(passwordEncoder.encode(password));
         entity.setName(name);
         entity.setEmail(email);

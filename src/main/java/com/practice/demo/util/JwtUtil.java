@@ -29,6 +29,7 @@ public class JwtUtil {
         Map<String,Object> claimMap = new HashMap<>();
         claimMap.put("name", user.getName());
         claimMap.put("email", user.getEmail());
+        claimMap.put("roles", "ROLE_USER");
 
         return Jwts.builder()
                 .setSubject(user.getName())
@@ -93,13 +94,12 @@ public class JwtUtil {
 
     public static Authentication getAuthentication(String token) {
         Claims claims = parseToken(token);
-        // 获取用户的名字和角色
+
         String username = claims.getSubject();
         List<GrantedAuthority> authorities = Arrays.stream(claims.get("roles").toString().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        // 返回验证对象
         return username != null ?
                 new UsernamePasswordAuthenticationToken(username, null, authorities) :
                 null;
