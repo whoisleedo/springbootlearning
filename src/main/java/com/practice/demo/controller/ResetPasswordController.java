@@ -35,7 +35,7 @@ public class ResetPasswordController {
     @Operation(summary = "reset password", description = "reset password")
     @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("users/resetPassword")
-    public ResponseEntity<CommonResponse> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto,
+    public ResponseEntity<CommonResponse<?>> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto,
                                            Authentication authentication){
         final String loginUserAccount =  (String)authentication.getPrincipal();
         log.debug("user Account:{} resetPassword" ,loginUserAccount);
@@ -84,9 +84,9 @@ public class ResetPasswordController {
     }
 
 
-    private ResponseEntity<CommonResponse> generateResponse(StatusCode statusCode){
-        CommonResponse response =
-                new CommonResponse(statusCode.getValue(), convertStatusToMessage(statusCode));
+    private ResponseEntity<CommonResponse<?>> generateResponse(StatusCode statusCode){
+        CommonResponse<?> response =
+                new CommonResponse<>(statusCode.getValue(), convertStatusToMessage(statusCode));
 
         switch (statusCode){
             case OK:

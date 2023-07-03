@@ -37,7 +37,7 @@ public class RegisterController {
 
 
     @PostMapping("users/register")
-    public ResponseEntity<CommonResponse> register(@RequestBody AccountDto accountVo) {
+    public ResponseEntity<CommonResponse<?>> register(@RequestBody AccountDto accountVo) {
         StatusCode statusCode;
         Long accountId = null;
         if (!isRegisterDataValid(accountVo)) {
@@ -66,9 +66,9 @@ public class RegisterController {
 
 
 
-    private ResponseEntity<CommonResponse> generateResponse(StatusCode statusCode, Long accountId){
-        CommonResponse response =
-                new CommonResponse(statusCode.getValue(), convertStatusToMessage(statusCode));
+    private ResponseEntity<CommonResponse<?>> generateResponse(StatusCode statusCode, Long accountId){
+        CommonResponse<?> response =
+                new CommonResponse<>(statusCode.getValue(), convertStatusToMessage(statusCode));
 
         switch (statusCode){
             case OK:
