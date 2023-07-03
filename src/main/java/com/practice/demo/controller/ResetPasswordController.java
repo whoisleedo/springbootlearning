@@ -5,6 +5,7 @@ import com.practice.demo.dto.CommonResponse;
 import com.practice.demo.dto.ResetPasswordDto;
 import com.practice.demo.dto.StatusCode;
 import com.practice.demo.sevice.ResetPasswordService;
+import com.practice.demo.util.ValidateUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,15 +74,10 @@ public class ResetPasswordController {
     }
     private boolean isRegisterDataValid(ResetPasswordDto resetPasswordDto){
         return Optional.ofNullable(resetPasswordDto)
-                .filter(vo -> isPasswordValid(resetPasswordDto.getCurrentPassword()))
-                .filter(vo -> isPasswordValid(resetPasswordDto.getNewPassword()))
+                .filter(vo -> ValidateUtil.isPasswordCorrect(resetPasswordDto.getCurrentPassword()))
+                .filter(vo -> ValidateUtil.isPasswordCorrect(resetPasswordDto.getNewPassword()))
                 .isPresent();
     }
-
-    private boolean isPasswordValid(String password){
-        return StringUtils.hasText(password) && password.length() > 5;
-    }
-
 
     private ResponseEntity<CommonResponse<?>> generateResponse(StatusCode statusCode){
         CommonResponse<?> response =
