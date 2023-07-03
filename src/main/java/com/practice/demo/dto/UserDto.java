@@ -1,10 +1,21 @@
 package com.practice.demo.dto;
 
-public class UserDto {
+import io.swagger.v3.oas.annotations.media.Schema;
 
+import javax.validation.constraints.NotNull;
+
+public class UserDto {
+    @NotNull
+    @Schema(description = "user id")
     private long id;
+    @NotNull
+    @Schema(description = "user's name")
     private String name;
+
+    @Schema(description = "user's email")
     private String email;
+    @NotNull
+    @Schema(description = "user's account")
     private String account;
 
     public long getId() {
