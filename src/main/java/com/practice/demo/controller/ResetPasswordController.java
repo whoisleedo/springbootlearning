@@ -1,5 +1,6 @@
 package com.practice.demo.controller;
 
+import com.practice.demo.dto.AccountDto;
 import com.practice.demo.dto.CommonResponse;
 import com.practice.demo.dto.ResetPasswordDto;
 import com.practice.demo.dto.StatusCode;
@@ -9,10 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 
 @RestController
@@ -33,6 +37,12 @@ public class ResetPasswordController {
         final String loginUserAccount =  (String)authentication.getPrincipal();
         log.debug("user Account:{} resetPassword" ,loginUserAccount);
         StatusCode statusCode;
+
+        if(!isRegisterDataValid(resetPasswordDto)){
+           log.debug("user Account:{} resetPassword not valid" ,loginUserAccount);
+            statusCode = StatusCode.InvalidData;
+            return generateResponse(statusCode);
+        }
         try{
             statusCode = resetPasswordService.resetPassword(loginUserAccount,resetPasswordDto)
                     .orElse(StatusCode.InvalidData);
@@ -40,7 +50,6 @@ public class ResetPasswordController {
         }catch (Exception e){
             log.warn("resetPassword error", e);
             statusCode = StatusCode.InternalError;
-
         }
 
 
@@ -60,6 +69,17 @@ public class ResetPasswordController {
                 return "unknown_status";
         }
     }
+    private boolean isRegisterDataValid(ResetPasswordDto resetPasswordDto){
+        return Optional.ofNullable(resetPasswordDto)
+                .filter(vo -> isPasswordValid(resetPasswordDto.getCurrentPassword()))
+                .filter(vo -> isPasswordValid(resetPasswordDto.getNewPassword()))
+                .isPresent();
+    }
+
+    private boolean isPasswordValid(String password){
+        return StringUtils.hasText(password) && password.length() > 5;
+    }
+
 
     private ResponseEntity<CommonResponse> generateResponse(StatusCode statusCode){
         CommonResponse response =
