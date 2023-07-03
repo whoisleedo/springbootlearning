@@ -1,7 +1,6 @@
 package com.practice.demo.controller;
 
 import com.practice.demo.dto.AccountDto;
-import com.practice.demo.dto.UserDto;
 import com.practice.demo.sevice.AccountMyBatisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

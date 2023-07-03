@@ -3,21 +3,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.practice.demo.entity.mapper.AccountMapper">
+    <resultMap id="accountDb" type="com.practice.demo.entity.Account">
+        <result property="id" column="id"/>
+        <result property="userAccount" column="user_account"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+    </resultMap>
 
     <!-- Select user by username -->
-    <select id="selectUserByAccount" parameterType="string" resultType="com.practice.demo.entity.Account">
+    <select id="selectUserByAccount" resultMap="accountDb">
         SELECT * FROM account WHERE user_account = #{account}
     </select>
 
-    <!-- Insert a new user -->
-    <insert id="insertUser" parameterType="com.practice.demo.entity.Account">
-        INSERT INTO account (account, password,name,email)
-        VALUES (#{user_account}, #{password},#{name},#{email})
-    </insert>
+<!--    &lt;!&ndash; Insert a new user &ndash;&gt;-->
+<!--    <insert id="insertUser" parameterType="com.practice.demo.entity.Account">-->
+<!--        INSERT INTO account (account, password,name,email)-->
+<!--        VALUES (#{user_account}, #{password},#{name},#{email})-->
+<!--    </insert>-->
 
-    <!-- Update user password -->
-    <update id="updateUserPassword" parameterType="com.practice.demo.entity.Account">
-        UPDATE account SET password = #{password} WHERE user_account = #{account}
-    </update>
+<!--    &lt;!&ndash; Update user password &ndash;&gt;-->
+<!--    <update id="updateUserPassword" parameterType="com.practice.demo.entity.Account">-->
+<!--        UPDATE account SET password = #{password} WHERE user_account = #{account}-->
+<!--    </update>-->
 
 </mapper>
