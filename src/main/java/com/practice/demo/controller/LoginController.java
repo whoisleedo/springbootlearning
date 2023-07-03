@@ -1,7 +1,10 @@
 package com.practice.demo.controller;
 
 
+import com.practice.demo.dto.AccessToken;
+import com.practice.demo.dto.CommonResponse;
 import com.practice.demo.dto.LoginDto;
+import com.practice.demo.dto.StatusCode;
 import com.practice.demo.sevice.AccountMyBatisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api")
 public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
-
     private final AccountMyBatisService accountMyBatisService;
     @Autowired
     public LoginController(AccountMyBatisService accountMyBatisService) {
@@ -22,11 +24,19 @@ public class LoginController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
+    public ResponseEntity<CommonResponse<AccessToken>> login(@RequestBody LoginDto loginDto){
         log.debug("check login:{}",loginDto.getAccount());
         return accountMyBatisService.login(loginDto)
+                .map(AccessToken::new)
+                .map(body -> new CommonResponse<AccessToken>(StatusCode.OK.getValue(),"success"))
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("user login fail"));
+                .orElseGet(() -> {
+                    CommonResponse<AccessToken> badRequest =
+                            new CommonResponse<>(StatusCode.InvalidData.getValue(),
+                                        "account password is incorrect");
+                    return ResponseEntity
+                            .badRequest().body(badRequest);
+                    });
 
     }
 }
