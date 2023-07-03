@@ -6,10 +6,10 @@ import com.practice.demo.dto.CommonResponse;
 import com.practice.demo.dto.LoginDto;
 import com.practice.demo.dto.StatusCode;
 import com.practice.demo.sevice.AccountMyBatisService;
+import com.practice.demo.util.ValidateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,17 +26,31 @@ public class LoginController {
     @PostMapping("login")
     public ResponseEntity<CommonResponse<AccessToken>> login(@RequestBody LoginDto loginDto){
         log.debug("check login:{}",loginDto.getAccount());
+        if(!isLoginDataCorrect(loginDto)){
+            log.debug("login data invalid account:{}", loginDto.getAccount());
+            return ResponseEntity.badRequest().body(generateInvalidResponse());
+        }
+
         return accountMyBatisService.login(loginDto)
                 .map(AccessToken::new)
-                .map(body -> new CommonResponse<AccessToken>(StatusCode.OK.getValue(),"success"))
+                .map(this::generateSuccessResponse)
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> {
-                    CommonResponse<AccessToken> badRequest =
-                            new CommonResponse<>(StatusCode.InvalidData.getValue(),
-                                        "account password is incorrect");
-                    return ResponseEntity
-                            .badRequest().body(badRequest);
-                    });
+                .orElseGet(() -> ResponseEntity
+                    .badRequest().body(generateInvalidResponse()));
 
+    }
+
+    private boolean isLoginDataCorrect(LoginDto loginDto){
+        return ValidateUtil.isAccountCorrect(loginDto.getAccount()) &&
+                ValidateUtil.isPasswordCorrect(loginDto.getPassword());
+    }
+
+    private CommonResponse<AccessToken> generateInvalidResponse(){
+        return new CommonResponse<>(StatusCode.InvalidData.getValue(),
+                "account password is incorrect");
+    }
+
+    private CommonResponse<AccessToken> generateSuccessResponse(AccessToken token){
+        return new CommonResponse<>(StatusCode.OK.getValue(),"success",token);
     }
 }
