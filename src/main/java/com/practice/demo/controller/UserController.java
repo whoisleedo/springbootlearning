@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api")
-public class AccountController {
-    private static final Logger log = LoggerFactory.getLogger(AccountController.class);
+public class UserController {
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
     @Autowired
-    public AccountController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
