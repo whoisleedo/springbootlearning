@@ -4,11 +4,13 @@ public enum StatusCode {
     OK(1),
     InvalidData(-1),
     InternalError(-2),
-    Account_Unavailable(-3);
+    Account_Unavailable(-3),
+
+    Invalid_Token(-4);
 
     private final int value;
 
-    private StatusCode(int value) {
+    StatusCode(int value) {
         this.value = value;
     }
 
