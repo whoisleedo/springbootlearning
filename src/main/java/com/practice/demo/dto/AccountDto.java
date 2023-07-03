@@ -1,9 +1,20 @@
 package com.practice.demo.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import javax.validation.constraints.NotNull;
+
 public class AccountDto {
+    @NotNull
+    @Schema(description = "register user's account")
     private String account;
+    @NotNull
+    @Schema(description = "register user's password")
     private String password;
+    @NotNull
+    @Schema(description = "register user's name")
     private String name;
+    @Schema(description = "register user's email")
     private String email;
 
     public String getAccount() {

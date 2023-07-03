@@ -1,7 +1,15 @@
 package com.practice.demo.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import javax.validation.constraints.NotNull;
+
 public class ResetPasswordDto {
+    @NotNull
+    @Schema(description = "old password")
     private String currentPassword;
+    @NotNull
+    @Schema(description = "new password")
     private String newPassword;
 
     public String getCurrentPassword() {

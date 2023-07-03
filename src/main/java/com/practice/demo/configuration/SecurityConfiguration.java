@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors().and().csrf().disable();
 
+
         return http.build();
     }
     @Bean

@@ -1,6 +1,7 @@
 package com.practice.demo.controller;
 
-import com.practice.demo.dto.AccountDto;
+
+import com.practice.demo.dto.LoginDto;
 import com.practice.demo.sevice.AccountMyBatisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +22,9 @@ public class LoginController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody AccountDto accountDto){
-        log.debug("check login:{}",accountDto.getAccount());
-        return accountMyBatisService.login(accountDto)
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
+        log.debug("check login:{}",loginDto.getAccount());
+        return accountMyBatisService.login(loginDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("user login fail"));
 
