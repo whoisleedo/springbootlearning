@@ -14,10 +14,10 @@ public class ValidateUtil {
     }
 
     public static boolean isAccountCorrect(String account){
-        return Pattern.compile(ACCOUNT_REGEX).matcher(account).matches();
+        return account != null && Pattern.compile(ACCOUNT_REGEX).matcher(account).matches();
     }
 
     public static boolean isPasswordCorrect(String password){
-        return Pattern.compile(PASSWORD_REGEX).matcher(password).matches();
+        return password != null && Pattern.compile(PASSWORD_REGEX).matcher(password).matches();
     }
 }

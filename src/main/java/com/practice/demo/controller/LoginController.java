@@ -7,6 +7,7 @@ import com.practice.demo.dto.LoginDto;
 import com.practice.demo.dto.StatusCode;
 import com.practice.demo.sevice.AccountMyBatisService;
 import com.practice.demo.util.ValidateUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class LoginController {
     public LoginController(AccountMyBatisService accountMyBatisService) {
         this.accountMyBatisService = accountMyBatisService;
     }
-
+    @Operation(summary = "login api", description = "login api")
     @PostMapping("login")
     public ResponseEntity<CommonResponse<AccessToken>> login(@RequestBody LoginDto loginDto){
         log.debug("check login:{}",loginDto.getAccount());

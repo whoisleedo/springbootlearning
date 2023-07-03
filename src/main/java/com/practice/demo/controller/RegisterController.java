@@ -8,6 +8,7 @@ import com.practice.demo.exception.AccountUnavailableException;
 import com.practice.demo.sevice.RegisterService;
 import com.practice.demo.util.ValidateUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class RegisterController {
         this.registerService = registerService;
     }
 
-
+    @Operation(summary = "register api", description = "register api")
     @PostMapping("users/register")
     public ResponseEntity<CommonResponse<?>> register(@RequestBody AccountDto accountVo) {
         StatusCode statusCode;
@@ -62,10 +63,7 @@ public class RegisterController {
         log.debug("end of register statusCode:{} , accountId:{}" , statusCode,accountId);
         return generateResponse(statusCode, accountId);
     }
-
-
-
-
+    
     private ResponseEntity<CommonResponse<?>> generateResponse(StatusCode statusCode, Long accountId){
         CommonResponse<?> response =
                 new CommonResponse<>(statusCode.getValue(), convertStatusToMessage(statusCode));
@@ -90,8 +88,8 @@ public class RegisterController {
 
     private boolean isRegisterDataValid(AccountDto accountVo){
         return Optional.ofNullable(accountVo)
-                .filter(vo -> StringUtils.hasText(vo.getAccount()) && vo.getAccount().length() < 15)
-                .filter(vo -> StringUtils.hasText(vo.getPassword()) && vo.getPassword().length() > 5)
+                .filter(vo -> ValidateUtil.isAccountCorrect(accountVo.getAccount()))
+                .filter(vo -> ValidateUtil.isPasswordCorrect(accountVo.getPassword()))
                 .filter(vo -> StringUtils.hasText(vo.getName()) && vo.getName().length() < 30)
                 .filter(vo -> isEmailValid(vo.getEmail()))
                 .isPresent();
