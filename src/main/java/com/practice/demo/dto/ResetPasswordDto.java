@@ -6,10 +6,10 @@ import javax.validation.constraints.NotNull;
 
 public class ResetPasswordDto {
     @NotNull
-    @Schema(description = "old password")
+    @Schema(description = "old password",minLength = 5 , maxLength = 30)
     private String currentPassword;
     @NotNull
-    @Schema(description = "new password")
+    @Schema(description = "new password",minLength = 5 , maxLength = 30)
     private String newPassword;
 
     public String getCurrentPassword() {
