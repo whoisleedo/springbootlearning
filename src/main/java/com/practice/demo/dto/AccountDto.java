@@ -6,15 +6,15 @@ import javax.validation.constraints.NotNull;
 
 public class AccountDto {
     @NotNull
-    @Schema(description = "register user's account")
+    @Schema(description = "register user's account",minLength = 5 , maxLength = 15)
     private String account;
     @NotNull
-    @Schema(description = "register user's password")
+    @Schema(description = "register user's password",minLength = 5, maxLength = 30)
     private String password;
     @NotNull
-    @Schema(description = "register user's name")
+    @Schema(description = "register user's name" , minLength = 1 , maxLength = 30)
     private String name;
-    @Schema(description = "register user's email")
+    @Schema(description = "register user's email" , maxLength = 255)
     private String email;
 
     public String getAccount() {

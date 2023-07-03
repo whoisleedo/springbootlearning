@@ -6,10 +6,10 @@ import javax.validation.constraints.NotNull;
 
 public class LoginDto {
     @NotNull
-    @Schema(description = "login user account")
+    @Schema(description = "login user account",minLength = 5 , maxLength = 15)
     private String account;
     @NotNull
-    @Schema(description = "login user password")
+    @Schema(description = "login user password",minLength = 5 , maxLength = 30)
     private String password;
 
     public String getAccount() {

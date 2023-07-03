@@ -9,9 +9,9 @@ public class CommonResponse<T> {
     @Schema(description = "status number")
     private Integer status;
     @NotNull
-    @Schema(description = "message for result")
+    @Schema(description = "message of result")
     private String errorMessage;
-
+    @Schema(description = "body of response")
     private T body;
 
     public CommonResponse(Integer status, String errorMessage) {
