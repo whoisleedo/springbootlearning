@@ -1,6 +1,6 @@
 package com.practice.demo.controller;
 
-import com.practice.demo.dto.AccountDto;
+
 import com.practice.demo.dto.CommonResponse;
 import com.practice.demo.dto.ResetPasswordDto;
 import com.practice.demo.dto.StatusCode;
