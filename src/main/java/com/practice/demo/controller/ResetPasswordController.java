@@ -5,6 +5,8 @@ import com.practice.demo.dto.CommonResponse;
 import com.practice.demo.dto.ResetPasswordDto;
 import com.practice.demo.dto.StatusCode;
 import com.practice.demo.sevice.ResetPasswordService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,8 @@ public class ResetPasswordController {
         this.resetPasswordService = resetPasswordService;
     }
 
-
+    @Operation(summary = "reset password", description = "reset password")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("users/resetPassword")
     public ResponseEntity<CommonResponse> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto,
                                            Authentication authentication){
