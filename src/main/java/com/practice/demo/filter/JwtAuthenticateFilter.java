@@ -1,8 +1,13 @@
 package com.practice.demo.filter;
 
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.practice.demo.dto.CommonResponse;
+import com.practice.demo.dto.StatusCode;
 import com.practice.demo.util.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +30,12 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
     @Value("#{'${demo.ignore-jwt.patterns}'.split(',')}")
     private List<String> ignoreJwtPatterns;
 
+    private final ObjectMapper objectMapper;
+    @Autowired
+    public JwtAuthenticateFilter(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -37,13 +48,24 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
                 Authentication authentication = JwtUtil.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Unauthorized - Invalid token");
+                returnUnauthorizedResponse(response);
                 return;
             }
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void returnUnauthorizedResponse(HttpServletResponse response) throws IOException {
+        CommonResponse<?> customResponse =
+                new CommonResponse<>(StatusCode.Invalid_Token.getValue(),
+                        "Unauthorized - Invalid token");
+
+        String jsonResponse = objectMapper.writeValueAsString(customResponse);
+
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        response.getWriter().write(jsonResponse);
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {
