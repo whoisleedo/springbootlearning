@@ -7,16 +7,14 @@ import com.practice.demo.dto.StatusCode;
 import com.practice.demo.sevice.ResetPasswordService;
 import com.practice.demo.util.ValidateUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -34,8 +32,10 @@ public class ResetPasswordController {
 
     @Operation(summary = "reset password", description = "reset password")
     @SecurityRequirement(name = "Bearer Authentication")
-    @PostMapping("users/resetPassword")
-    public ResponseEntity<CommonResponse<?>> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto,
+    @PutMapping("users/{id}/password")
+    public ResponseEntity<CommonResponse<?>> resetPassword(
+            @RequestBody ResetPasswordDto resetPasswordDto,
+            @Parameter(description = "User ID", example = "1")@PathVariable long id,
                                            Authentication authentication){
         final String loginUserAccount =  (String)authentication.getPrincipal();
         log.debug("user Account:{} resetPassword" ,loginUserAccount);
@@ -47,7 +47,7 @@ public class ResetPasswordController {
             return generateResponse(statusCode);
         }
         try{
-            statusCode = resetPasswordService.resetPassword(loginUserAccount,resetPasswordDto)
+            statusCode = resetPasswordService.resetPassword(id,loginUserAccount,resetPasswordDto)
                     .orElse(StatusCode.InvalidData);
 
         }catch (Exception e){

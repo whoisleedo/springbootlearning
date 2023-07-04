@@ -22,8 +22,9 @@ public class ResetPasswordService {
         this.passwordEncoder = passwordEncoder;
     }
     @Transactional(rollbackFor = {Exception.class,RuntimeException.class})
-    public Optional<StatusCode> resetPassword(String account, ResetPasswordDto resetPasswordDto){
-        return  accountRepository.findByUserAccount(account)
+    public Optional<StatusCode> resetPassword(long id ,String account, ResetPasswordDto resetPasswordDto){
+        return  accountRepository.findById(id)
+                .filter(userDb -> userDb.getUserAccount().equals(account))
                 .filter(userDb -> BCrypt.checkpw(resetPasswordDto.getCurrentPassword(), userDb.getPassword()))
                 .map(userDb -> {
                     userDb.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));

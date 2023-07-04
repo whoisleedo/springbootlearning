@@ -24,7 +24,7 @@ public class LoginController {
         this.accountMyBatisService = accountMyBatisService;
     }
     @Operation(summary = "login api", description = "login api")
-    @PostMapping("login")
+    @PostMapping("sessions")
     public ResponseEntity<CommonResponse<AccessToken>> login(@RequestBody LoginDto loginDto){
         log.debug("check login:{}",loginDto.getAccount());
         if(!isLoginDataCorrect(loginDto)){
@@ -48,7 +48,7 @@ public class LoginController {
 
     private CommonResponse<AccessToken> generateInvalidResponse(){
         return new CommonResponse<>(StatusCode.InvalidData.getValue(),
-                "account password is incorrect");
+                "account or password is incorrect");
     }
 
     private CommonResponse<AccessToken> generateSuccessResponse(AccessToken token){
