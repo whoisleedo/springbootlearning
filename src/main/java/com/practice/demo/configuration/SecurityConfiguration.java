@@ -29,15 +29,18 @@ public class SecurityConfiguration {
         this.jwtAuthenticateFilter = jwtAuthenticateFilter;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
-    @Value("${demo.ignore-jwt.urls}")
-    private String[] ignoreJwtPaths;
-    @Value("${demo.allow.domains}")
-    private String[] allowDomains;
+    @Value("${demo.ignore-jwt.open-api.urls}")
+    private String[] ignoreJwtOpenApiPaths;
+    @Value("${demo.ignore-jwt.api.urls}")
+    private String[] ignoreJwtApiUrls;
+    @Value("${demo.cors.allow.domains}")
+    private String[] allowCorsDomain;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(ignoreJwtPaths).permitAll()
+                .antMatchers(ignoreJwtApiUrls).permitAll()
+                .antMatchers(ignoreJwtOpenApiPaths).permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -53,7 +56,7 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList(allowDomains));
+        corsConfiguration.setAllowedOrigins(Arrays.asList(allowCorsDomain));
         corsConfiguration.setAllowedMethods(Arrays.asList("*"));
         corsConfiguration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -22,9 +22,9 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
 
     private final static Logger log = LoggerFactory.getLogger(JwtAuthenticateFilter.class);
 
-    @Value("#{'${demo.ignore-jwt.urls}'.split(',')}")
+    @Value("#{'${demo.ignore-jwt.open-api.urls}'.split(',')}")
     private List<String> ignoreJwtPaths;
-    @Value("#{'${demo.ignore-jwt.patterns}'.split(',')}")
+    @Value("#{'${demo.ignore-jwt.open-api.patterns}'.split(',')}")
     private List<String> ignoreJwtPatterns;
 
 

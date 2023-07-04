@@ -37,7 +37,7 @@ public class RegisterController {
     }
 
     @Operation(summary = "register api", description = "register api")
-    @PostMapping("users/register")
+    @PostMapping("users")
     public ResponseEntity<CommonResponse<?>> register(@RequestBody AccountDto accountVo) {
         StatusCode statusCode;
         Long accountId = null;
