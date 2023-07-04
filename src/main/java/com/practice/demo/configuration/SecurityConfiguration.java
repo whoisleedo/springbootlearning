@@ -1,6 +1,7 @@
 package com.practice.demo.configuration;
 
 import com.practice.demo.filter.JwtAuthenticateFilter;
+import com.practice.demo.filter.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,46 +14,56 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import java.util.Arrays;
 
 
 
 @Configuration
 public class SecurityConfiguration {
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    private final JwtAuthenticateFilter jwtAuthenticateFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    public SecurityConfiguration(JwtAuthenticateFilter jwtAuthenticateFilter,
+                                 JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
+        this.jwtAuthenticateFilter = jwtAuthenticateFilter;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
     @Value("${demo.ignore-jwt.urls}")
     private String[] ignoreJwtPaths;
     @Value("${demo.allow.domains}")
     private String[] allowDomains;
-    @Autowired
-    private JwtAuthenticateFilter jwtAuthenticateFilter;
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(ignoreJwtPaths).permitAll()
                 .anyRequest().authenticated()
+                .and().exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().addFilterBefore(jwtAuthenticateFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors().and().csrf().disable();
-
+                .cors()
+                .and().csrf().disable();
 
         return http.build();
     }
+
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(Arrays.asList(allowDomains));
         corsConfiguration.setAllowedMethods(Arrays.asList("*"));
-        corsConfiguration.setAllowCredentials(true); // 允许发送身份验证凭证（例如 Cookie）
-
+        corsConfiguration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
 }
