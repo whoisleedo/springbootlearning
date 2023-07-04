@@ -30,43 +30,25 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
     @Value("#{'${demo.ignore-jwt.patterns}'.split(',')}")
     private List<String> ignoreJwtPatterns;
 
-    private final ObjectMapper objectMapper;
-    @Autowired
-    public JwtAuthenticateFilter(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String token = getTokenFromRequest(request);
         String path = request.getRequestURI();
         log.debug("jwt auth filter request path:{}", path);
         if (!isIgnoreJwtPath(path)) {
+            String token = getTokenFromRequest(request);
+            log.debug("visiting token :{}" ,token);
             if (token != null && JwtUtil.validateToken(token)) {
                 Authentication authentication = JwtUtil.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            } else {
-                returnUnauthorizedResponse(response);
-                return;
             }
         }
 
         filterChain.doFilter(request, response);
     }
 
-    private void returnUnauthorizedResponse(HttpServletResponse response) throws IOException {
-        CommonResponse<?> customResponse =
-                new CommonResponse<>(StatusCode.Invalid_Token.getValue(),
-                        "Unauthorized - Invalid token");
-
-        String jsonResponse = objectMapper.writeValueAsString(customResponse);
-
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setContentType("application/json");
-        response.getWriter().write(jsonResponse);
-    }
 
     private String getTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(JwtUtil.TOKEN_HEADER);
