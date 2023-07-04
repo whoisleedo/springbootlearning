@@ -18,12 +18,12 @@ public class JwtUtil {
     public static final String TOKEN_PREFIX = "Bearer ";
     private static final String SECRET_KEY = "apC56MPCEENmNOTaY3liBeljGvmnLM2SZPVccp+WJW53xIe8l8qJLpgfqHgmBmYb5qtk8A1vYOnSDCY9S9BpVA==";
     private static final long EXPIRATION_TIME = 300000;
+    private static final SecretKey SIGNING_KEY = getKey();
 
 
     public static String generateToken(Account user) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + EXPIRATION_TIME);
-        SecretKey secretKey = getKey();
         Map<String,Object> detailMap = new HashMap<>();
         detailMap.put("preferred_username", user.getUserAccount());
         detailMap.put("email", user.getEmail());
@@ -35,7 +35,7 @@ public class JwtUtil {
                 .setIssuer("demoApi")
                 .setIssuedAt(now)
                 .setExpiration(expiration)
-                .signWith(secretKey, SignatureAlgorithm.HS512)
+                .signWith(SIGNING_KEY, SignatureAlgorithm.HS512)
                 .compact();
 
     }
@@ -43,7 +43,7 @@ public class JwtUtil {
     public static boolean validateToken(String token) {
             try{
                 Jwts.parserBuilder()
-                        .setSigningKey(getKey())
+                        .setSigningKey(SIGNING_KEY)
                         .build()
                         .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                         .getBody()
@@ -57,7 +57,7 @@ public class JwtUtil {
 
     public static Claims parseToken(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(getKey())
+                .setSigningKey(SIGNING_KEY)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
