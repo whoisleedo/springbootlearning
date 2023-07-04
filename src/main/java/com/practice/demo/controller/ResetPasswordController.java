@@ -8,7 +8,10 @@ import com.practice.demo.sevice.ResetPasswordService;
 import com.practice.demo.util.ValidateUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api")
+@Tag(name = "reset password api", description = "API for reset user password")
 public class ResetPasswordController {
     private static final Logger log = LoggerFactory.getLogger(ResetPasswordController.class);
 
@@ -33,6 +37,11 @@ public class ResetPasswordController {
     @Operation(summary = "reset password", description = "reset password")
     @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("users/{id}/password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "reset password success"),
+            @ApiResponse(responseCode = "400", description = "invalid password"),
+            @ApiResponse(responseCode = "500", description = "internal error")
+    })
     public ResponseEntity<CommonResponse<?>> resetPassword(
             @RequestBody ResetPasswordDto resetPasswordDto,
             @Parameter(description = "User ID", example = "1")@PathVariable long id,

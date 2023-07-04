@@ -9,6 +9,9 @@ import com.practice.demo.sevice.RegisterService;
 import com.practice.demo.util.ValidateUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api")
+@Tag(name = "register user api", description = "API for register user")
 public class RegisterController {
 
     private static final Logger log = LoggerFactory.getLogger(RegisterController.class);
@@ -38,6 +42,12 @@ public class RegisterController {
 
     @Operation(summary = "register api", description = "register api")
     @PostMapping("users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "register success"),
+            @ApiResponse(responseCode = "400", description = "invalid data"),
+            @ApiResponse(responseCode = "409", description = "account unavailable"),
+            @ApiResponse(responseCode = "500", description = "internal error")
+    })
     public ResponseEntity<CommonResponse<?>> register(@RequestBody AccountDto accountVo) {
         StatusCode statusCode;
         Long accountId = null;

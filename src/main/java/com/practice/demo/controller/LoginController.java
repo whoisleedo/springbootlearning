@@ -8,6 +8,9 @@ import com.practice.demo.dto.StatusCode;
 import com.practice.demo.sevice.AccountMyBatisService;
 import com.practice.demo.util.ValidateUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api")
+@Tag(name = "login api", description = "API for user login ")
 public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     private final AccountMyBatisService accountMyBatisService;
@@ -25,6 +29,10 @@ public class LoginController {
     }
     @Operation(summary = "login api", description = "login api")
     @PostMapping("sessions")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "login success"),
+            @ApiResponse(responseCode = "400", description = "login fail")
+    })
     public ResponseEntity<CommonResponse<AccessToken>> login(@RequestBody LoginDto loginDto){
         log.debug("check login:{}",loginDto.getAccount());
         if(!isLoginDataCorrect(loginDto)){
