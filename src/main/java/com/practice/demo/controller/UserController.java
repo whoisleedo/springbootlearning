@@ -2,7 +2,6 @@ package com.practice.demo.controller;
 
 
 import com.practice.demo.dto.CommonResponse;
-import com.practice.demo.dto.StatusCode;
 import com.practice.demo.dto.UserDto;
 import com.practice.demo.sevice.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,9 +40,14 @@ public class UserController {
         String loginUserAccount =  (String)authentication.getPrincipal();
         log.debug("user Account:{} query userId:{}" ,loginUserAccount,id);
         return userService.getUserById(id)
-                .map(userDto -> new CommonResponse<>(StatusCode.OK.getValue(), "success",userDto))
+                .map(this::generateResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+
+    }
+
+    private CommonResponse<UserDto> generateResponse(UserDto userDto){
+        return new CommonResponse<UserDto>().setBody(userDto);
 
     }
 

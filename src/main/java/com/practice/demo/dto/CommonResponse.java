@@ -19,34 +19,36 @@ public class CommonResponse<T> {
         this.errorMessage = errorMessage;
     }
 
-    public CommonResponse(Integer status, String errorMessage, T body) {
-        this.status = status;
-        this.errorMessage = errorMessage;
-        this.body = body;
+
+    public CommonResponse() {
+        this(StatusCode.OK.getValue(), "success");
     }
 
     public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public CommonResponse<T> setStatus(Integer status) {
         this.status = status;
+        return this;
     }
 
     public String getErrorMessage() {
         return errorMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
+    public CommonResponse<T> setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+        return this;
     }
 
     public T getBody() {
         return body;
     }
 
-    public void setBody(T body) {
+    public CommonResponse<T> setBody(T body) {
         this.body = body;
+        return this;
     }
 
     @Override
