@@ -4,9 +4,9 @@ public enum StatusCode {
     OK(1),
     InvalidData(-1),
     InternalError(-2),
-    Account_Unavailable(-3),
+    AccountUnavailable(-3),
 
-    Invalid_Token(-4);
+    InvalidToken(-4);
 
     private final int value;
 
