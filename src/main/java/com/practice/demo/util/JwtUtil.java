@@ -27,6 +27,8 @@ public class JwtUtil {
         Map<String,Object> detailMap = new HashMap<>();
         detailMap.put("preferred_username", user.getUserAccount());
         detailMap.put("email", user.getEmail());
+        detailMap.put("id", user.getId());
+        detailMap.put("name", user.getName());
         detailMap.put("roles", "ROLE_USER");
 
         return Jwts.builder()
