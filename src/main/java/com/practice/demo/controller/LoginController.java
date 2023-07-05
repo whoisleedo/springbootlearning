@@ -55,11 +55,13 @@ public class LoginController {
     }
 
     private CommonResponse<AccessToken> generateInvalidResponse(){
-        return new CommonResponse<>(StatusCode.InvalidData.getValue(),
-                "account or password is incorrect");
+        StatusCode statusCode = StatusCode.InvalidData;
+
+        return new CommonResponse<AccessToken>().setStatus(statusCode.getValue())
+                                     .setErrorMessage( "account or password is incorrect");
     }
 
     private CommonResponse<AccessToken> generateSuccessResponse(AccessToken token){
-        return new CommonResponse<>(StatusCode.OK.getValue(),"success",token);
+        return new CommonResponse<AccessToken>().setBody(token);
     }
 }

@@ -76,7 +76,8 @@ public class RegisterController {
     
     private ResponseEntity<CommonResponse<?>> generateResponse(StatusCode statusCode, Long accountId){
         CommonResponse<?> response =
-                new CommonResponse<>(statusCode.getValue(), convertStatusToMessage(statusCode));
+                new CommonResponse<>().setStatus(statusCode.getValue())
+                        .setErrorMessage(convertStatusToMessage(statusCode));
 
         switch (statusCode){
             case OK:

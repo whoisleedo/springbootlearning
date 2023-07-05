@@ -90,8 +90,8 @@ public class ResetPasswordController {
 
     private ResponseEntity<CommonResponse<?>> generateResponse(StatusCode statusCode){
         CommonResponse<?> response =
-                new CommonResponse<>(statusCode.getValue(), convertStatusToMessage(statusCode));
-
+                new CommonResponse<>().setStatus(statusCode.getValue())
+                                      .setErrorMessage(convertStatusToMessage(statusCode));
         switch (statusCode){
             case OK:
                 return ResponseEntity.accepted().body(response);
