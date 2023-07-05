@@ -63,7 +63,7 @@ public class RegisterController {
             // do something in db
         } catch (AccountUnavailableException accountUnavailableException) {
             log.debug("account unavailable account:{}", accountVo.getAccount());
-            statusCode = StatusCode.Account_Unavailable;
+            statusCode = StatusCode.AccountUnavailable;
 
         } catch (Exception exception) {
             log.warn("other error when register accountVo:{}", accountVo, exception);
@@ -87,7 +87,7 @@ public class RegisterController {
                 return ResponseEntity.badRequest().body(response);
             case InternalError:
                 return ResponseEntity.internalServerError().body(response);
-            case Account_Unavailable:
+            case AccountUnavailable:
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
             default:
                 log.warn("unknown_status :{}" ,statusCode);
@@ -118,7 +118,7 @@ public class RegisterController {
                 return "invalid_input";
             case InternalError:
                 return "internal_error";
-            case Account_Unavailable:
+            case AccountUnavailable:
                 return "account_unavailable";
             default:
                 log.warn("unknown_status :{}" ,statusCode);

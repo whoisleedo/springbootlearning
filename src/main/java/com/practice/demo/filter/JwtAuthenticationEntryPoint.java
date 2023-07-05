@@ -29,7 +29,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private void returnUnauthorizedResponse(HttpServletResponse response) throws IOException {
         CommonResponse<?> customResponse =
-                new CommonResponse<>(StatusCode.Invalid_Token.getValue(),
+                new CommonResponse<>(StatusCode.InvalidToken.getValue(),
                         "Unauthorized - Invalid token");
         String jsonResponse = objectMapper.writeValueAsString(customResponse);
 
