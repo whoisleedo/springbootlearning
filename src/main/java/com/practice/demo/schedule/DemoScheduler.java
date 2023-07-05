@@ -36,7 +36,7 @@ public class DemoScheduler {
                 List<Integer> numList = getNumList();
                 demoTask.demoTask(numList);
             } catch (Exception e) {
-                log.error("task error");
+                log.error("task error" ,e);
 
             } finally {
                 methodCheck.set(false);
