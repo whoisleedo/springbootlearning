@@ -2,8 +2,8 @@ package com.practice.demo.controller;
 
 
 import com.practice.demo.dto.AccountDto;
-import com.practice.demo.dto.CommonResponse;
-import com.practice.demo.dto.StatusCode;
+import com.practice.demo.dto.common.CommonResponse;
+import com.practice.demo.dto.common.StatusCode;
 import com.practice.demo.exception.AccountUnavailableException;
 import com.practice.demo.sevice.RegisterService;
 import com.practice.demo.util.ValidateUtil;

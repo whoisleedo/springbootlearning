@@ -1,7 +1,7 @@
 package com.practice.demo.sevice;
 
 import com.practice.demo.dto.ResetPasswordDto;
-import com.practice.demo.dto.StatusCode;
+import com.practice.demo.dto.common.StatusCode;
 import com.practice.demo.entity.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;

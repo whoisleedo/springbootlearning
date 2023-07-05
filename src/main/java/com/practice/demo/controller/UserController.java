@@ -1,7 +1,7 @@
 package com.practice.demo.controller;
 
 
-import com.practice.demo.dto.CommonResponse;
+import com.practice.demo.dto.common.CommonResponse;
 import com.practice.demo.dto.UserDto;
 import com.practice.demo.sevice.UserService;
 import io.swagger.v3.oas.annotations.Operation;

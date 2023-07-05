@@ -1,9 +1,9 @@
 package com.practice.demo.controller;
 
 
-import com.practice.demo.dto.CommonResponse;
+import com.practice.demo.dto.common.CommonResponse;
 import com.practice.demo.dto.ResetPasswordDto;
-import com.practice.demo.dto.StatusCode;
+import com.practice.demo.dto.common.StatusCode;
 import com.practice.demo.sevice.ResetPasswordService;
 import com.practice.demo.util.ValidateUtil;
 import io.swagger.v3.oas.annotations.Operation;

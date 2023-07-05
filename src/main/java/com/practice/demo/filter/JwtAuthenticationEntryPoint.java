@@ -1,8 +1,8 @@
 package com.practice.demo.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.practice.demo.dto.CommonResponse;
-import com.practice.demo.dto.StatusCode;
+import com.practice.demo.dto.common.CommonResponse;
+import com.practice.demo.dto.common.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

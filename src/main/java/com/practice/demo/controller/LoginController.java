@@ -1,10 +1,10 @@
 package com.practice.demo.controller;
 
 
-import com.practice.demo.dto.AccessToken;
-import com.practice.demo.dto.CommonResponse;
+import com.practice.demo.dto.AccessTokenDto;
+import com.practice.demo.dto.common.CommonResponse;
 import com.practice.demo.dto.LoginDto;
-import com.practice.demo.dto.StatusCode;
+import com.practice.demo.dto.common.StatusCode;
 import com.practice.demo.sevice.AccountMyBatisService;
 import com.practice.demo.util.ValidateUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +33,7 @@ public class LoginController {
             @ApiResponse(responseCode = "200", description = "login success"),
             @ApiResponse(responseCode = "400", description = "login fail")
     })
-    public ResponseEntity<CommonResponse<AccessToken>> login(@RequestBody LoginDto loginDto){
+    public ResponseEntity<CommonResponse<AccessTokenDto>> login(@RequestBody LoginDto loginDto){
         log.debug("check login:{}",loginDto.getAccount());
         if(!isLoginDataCorrect(loginDto)){
             log.debug("login data invalid account:{}", loginDto.getAccount());
@@ -41,7 +41,7 @@ public class LoginController {
         }
 
         return accountMyBatisService.login(loginDto)
-                .map(AccessToken::new)
+                .map(AccessTokenDto::new)
                 .map(this::generateSuccessResponse)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity
@@ -54,14 +54,14 @@ public class LoginController {
                 ValidateUtil.isPasswordCorrect(loginDto.getPassword());
     }
 
-    private CommonResponse<AccessToken> generateInvalidResponse(){
+    private CommonResponse<AccessTokenDto> generateInvalidResponse(){
         StatusCode statusCode = StatusCode.InvalidData;
 
-        return new CommonResponse<AccessToken>().setStatus(statusCode.getValue())
+        return new CommonResponse<AccessTokenDto>().setStatus(statusCode.getValue())
                                      .setErrorMessage( "account or password is incorrect");
     }
 
-    private CommonResponse<AccessToken> generateSuccessResponse(AccessToken token){
-        return new CommonResponse<AccessToken>().setBody(token);
+    private CommonResponse<AccessTokenDto> generateSuccessResponse(AccessTokenDto token){
+        return new CommonResponse<AccessTokenDto>().setBody(token);
     }
 }

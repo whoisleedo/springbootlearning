@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 
-public class AccessToken {
+public class AccessTokenDto {
     @NotNull
     @Schema(description = "jwt token")
     private String accessToken;
@@ -18,11 +18,11 @@ public class AccessToken {
         this.accessToken = accessToken;
     }
 
-    public AccessToken(String accessToken) {
+    public AccessTokenDto(String accessToken) {
         this.accessToken = accessToken;
     }
 
-    public AccessToken() {
+    public AccessTokenDto() {
     }
 
     @Override
