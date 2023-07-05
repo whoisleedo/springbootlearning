@@ -2,9 +2,9 @@ package com.practice.demo.controller;
 
 
 import com.practice.demo.dto.AccessToken;
-import com.practice.demo.dto.CommonResponse;
+import com.practice.demo.dto.common.CommonResponse;
 import com.practice.demo.dto.LoginDto;
-import com.practice.demo.dto.StatusCode;
+import com.practice.demo.dto.common.StatusCode;
 import com.practice.demo.sevice.AccountMyBatisService;
 import com.practice.demo.util.ValidateUtil;
 import io.swagger.v3.oas.annotations.Operation;
