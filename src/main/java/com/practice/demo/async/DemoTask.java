@@ -15,14 +15,14 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 public class DemoTask {
     private static final Logger log = LoggerFactory.getLogger(DemoTask.class);
-    @Qualifier("paramThreadPool")
     @Autowired
-    private Executor executor;
+    @Qualifier("myTaskExecutor")
+    private Executor taskExecutor;
 
 
     public void demoTask(List<Integer> numList) {
         CompletableFuture<?>[] futures = numList.stream()
-                .map(i -> CompletableFuture.runAsync(() -> calculateAndLog(i), executor))
+                .map(i -> CompletableFuture.runAsync(() -> calculateAndLog(i),taskExecutor))
                 .toArray(CompletableFuture[]::new);
 
         CompletableFuture.allOf(futures)

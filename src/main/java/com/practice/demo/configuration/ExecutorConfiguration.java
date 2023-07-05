@@ -3,12 +3,14 @@ package com.practice.demo.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 @Configuration
+@EnableAsync
 public class ExecutorConfiguration {
 
     @Value("${demo.thread_pool.core_pool_size:2}")
@@ -22,15 +24,16 @@ public class ExecutorConfiguration {
     @Value("${demo.thread_pool.thread_name_prefix:taskExecutor-}")
     private String threadNamePrefix;
 
-    @Bean
-    public Executor paramThreadPool() {
+    @Bean(name = "myTaskExecutor")
+    public Executor myTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);
         executor.setMaxPoolSize(maxPoolSize);
         executor.setQueueCapacity(queueCapacity);
         executor.setKeepAliveSeconds(keepAliveSeconds);
         executor.setThreadNamePrefix(threadNamePrefix);
-        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
+        executor.initialize();
         return executor;
     }
 
