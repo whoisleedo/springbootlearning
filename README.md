@@ -1,13 +1,11 @@
-# springbootlearning
-
-## 1.Data Schema
+## 1. Data Schema
 
 ### table name: account
 
 | column        | restrict         |           meaning  |
 |:-------------:|:-------------:   |  :-------------:   |
 | id   |  int pk  ai | db id  |
-| user_accoun   | varchar(15) uk not null |   使用者帳號|
+| user_account   | varchar(15) uk not null |   使用者帳號|
 | password       | varchar(255) not null   |加密後的密碼|
 | name        | varchar(30) not null   |使用者名稱      |
 | email      | 	varchar(255)  | 使用者信箱              |
@@ -15,9 +13,9 @@
 
 
 
-## 2.Object Design
+## 2. Object Design
 
-### Name :	CommonResponse
+### Name:	CommonResponse
 
 | name        | type               |     nullable       |
 |:-------------:|:-------------:   |  :-------------:   |
@@ -95,7 +93,7 @@
 
 
 
-#  3.apis
+#  3. apis
 ## register api
 
 | property        | mean           |  
