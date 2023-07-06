@@ -79,6 +79,7 @@
 | -2        | exception situation  |
 | -3        | account unavailable  |
 | -4        | access token invalid |
+| -5        | user not found       |
 
 ## Jwt Token spec
 |      property      |       mean        |  
