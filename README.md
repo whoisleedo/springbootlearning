@@ -82,6 +82,16 @@
 | -3        | account unavailable  |
 | -4        | access token invalid |
 
+## Jwt Token spec
+|      property      |       mean        |  
+|:------------------:|:-----------------:|  
+|      subject       |      account      |  
+|       issuer       |     	demoApi      |
+| preferred_username |      account      |
+|       email        |       email       |
+|         id         |       db_id       |
+|        name        |     user_name     |
+|      roles      | List of user_role |
 
 
 
