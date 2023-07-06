@@ -5,8 +5,8 @@ public enum StatusCode {
     InvalidData(-1),
     InternalError(-2),
     AccountUnavailable(-3),
-
-    InvalidToken(-4);
+    InvalidToken(-4),
+    NotFound(-5);
 
     private final int value;
 
