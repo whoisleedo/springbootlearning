@@ -50,13 +50,18 @@ String 	account			not null length 5 -15
 String	name				not null length 1 - 30   
 String 	email				REGEX   
 
-Common Response Status value   
+## Common Response Status value   
 
-1   -  success   
--1	- input invalid data   
--2	- exception situation  
--3	- account unavailable   
--4	- access token invalid   
+
+| status code   | mean             |  
+| ------------- |:-------------:   |  
+| 1         | success              |  
+| -1        | input invalid data   |
+| -2        | exception situation  |
+| -3        | account unavailable  |
+| -4        | access token invalid |
+
+
 
 
 #  3.apis
