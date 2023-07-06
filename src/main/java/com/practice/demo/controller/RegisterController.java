@@ -9,8 +9,10 @@ import com.practice.demo.sevice.RegisterService;
 import com.practice.demo.util.ValidateUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,15 +42,63 @@ public class RegisterController {
         this.registerService = registerService;
     }
 
-    @Operation(summary = "register api", description = "register api")
+    @Operation(summary = "register api", description = "register api",
+            requestBody =
+                    @RequestBody(content =
+                            @Content(mediaType = "application/json",
+                                examples = @ExampleObject(name = "request",
+                                value = "{\n" +
+                                        "    \"account\":\"test2\",\n" +
+                                        "    \"password\":\"password\",\n" +
+                                        "    \"name\": \"test002\",\n" +
+                                        "    \"email\": \"test2@gmail.com\"\n" +
+                                        "}"))),
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "register success",
+                             content = @Content(mediaType = "application/json",
+                                     examples = @ExampleObject(name = "success",
+                                             value = "{\n" +
+                                                     "\"status\": 1,\n" +
+                                                     "\"errorMessage\": \"success\",\n" +
+                                                     "\"body\": null\n" +
+                                                     "}"))
+
+                    ),
+                    @ApiResponse(responseCode = "400", description = "invalid_input",
+                            content = @Content(mediaType = "application/json",
+                                    examples = @ExampleObject(name = "input error",
+                                            value = "{\n" +
+                                                    "\"status\": -1,\n" +
+                                                    "\"errorMessage\": \"invalid_input\",\n" +
+                                                    "\"body\": null\n" +
+                                                    "}"))
+
+                    ),
+                    @ApiResponse(responseCode = "409", description = "account unavailable",
+                            content = @Content(mediaType = "application/json",
+                                    examples = @ExampleObject(name = "account conflict",
+                                            value = "{\n" +
+                                                    "\"status\": -3,\n" +
+                                                    "\"errorMessage\": \"account_unavailable\",\n" +
+                                                    "\"body\": null\n" +
+                                                    "}"))
+
+                    ),
+                    @ApiResponse(responseCode = "500", description = "internal error",
+                            content = @Content(mediaType = "application/json",
+                                    examples = @ExampleObject(name = "other exception",
+                                            value = "{\n" +
+                                                    "\"status\": -2,\n" +
+                                                    "\"errorMessage\": \"internal_error\",\n" +
+                                                    "\"body\": null\n" +
+                                                    "}"))
+
+                    )
+            }
+    )
     @PostMapping("users")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "register success"),
-            @ApiResponse(responseCode = "400", description = "invalid data"),
-            @ApiResponse(responseCode = "409", description = "account unavailable"),
-            @ApiResponse(responseCode = "500", description = "internal error")
-    })
-    public ResponseEntity<CommonResponse<?>> register(@RequestBody AccountDto accountVo) {
+    public ResponseEntity<CommonResponse<?>> register(
+            @org.springframework.web.bind.annotation.RequestBody AccountDto accountVo) {
         StatusCode statusCode;
         Long accountId = null;
         if (!isRegisterDataValid(accountVo)) {
