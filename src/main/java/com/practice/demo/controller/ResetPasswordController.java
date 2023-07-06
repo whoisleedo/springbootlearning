@@ -8,8 +8,9 @@ import com.practice.demo.sevice.ResetPasswordService;
 import com.practice.demo.util.ValidateUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
@@ -34,14 +35,50 @@ public class ResetPasswordController {
         this.resetPasswordService = resetPasswordService;
     }
 
-    @Operation(summary = "reset password", description = "reset password")
+    @Operation(summary = "reset password", description = "reset password",
+            requestBody =
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(content =
+            @Content(mediaType = "application/json",
+                    examples = @ExampleObject(name = "request",
+                            value = "{\n" +
+                                    "    \"currentPassword\":\"oldPassword\",\n" +
+                                    "    \"newPassword\":\"newPassword\"\n" +
+                                    "}"))),
+            responses = {
+                    @ApiResponse(responseCode = "202", description = "reset success",
+                            content = @Content(mediaType = "application/json",
+                                    examples = @ExampleObject(name = "success",
+                                            value = "{\n" +
+                                                    "\"status\": 1,\n" +
+                                                    "\"errorMessage\": \"reset success\",\n" +
+                                                    "\"body\": null\n" +
+                                                    "}"))
+
+                    ),
+                    @ApiResponse(responseCode = "400", description = "invalid_input",
+                            content = @Content(mediaType = "application/json",
+                                    examples = @ExampleObject(name = "input error",
+                                            value = "{\n" +
+                                                    "\"status\": -1,\n" +
+                                                    "\"errorMessage\": \"reset data error\",\n" +
+                                                    "\"body\": null\n" +
+                                                    "}"))
+
+                    ),
+                    @ApiResponse(responseCode = "500", description = "internal error",
+                            content = @Content(mediaType = "application/json",
+                                    examples = @ExampleObject(name = "other exception",
+                                            value = "{\n" +
+                                                    "\"status\": -2,\n" +
+                                                    "\"errorMessage\": \"internal_error\",\n" +
+                                                    "\"body\": null\n" +
+                                                    "}"))
+
+                    )
+            }
+    )
     @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping("users/{id}/password")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "202", description = "reset password success"),
-            @ApiResponse(responseCode = "400", description = "invalid password"),
-            @ApiResponse(responseCode = "500", description = "internal error")
-    })
     public ResponseEntity<CommonResponse<?>> resetPassword(
             @RequestBody ResetPasswordDto resetPasswordDto,
             @Parameter(description = "User ID", example = "1")@PathVariable long id,
