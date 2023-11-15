@@ -47,7 +47,9 @@ public class SecurityConfiguration {
                 .and().addFilterBefore(jwtAuthenticateFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors()
-                .and().csrf().disable();
+                .and().csrf().disable()
+                // 禁用 X-Frame-Options（允許 H2 Console 在框架中運行）
+                .headers().frameOptions().disable();
 
         return http.build();
     }
