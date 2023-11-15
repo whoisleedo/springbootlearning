@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "9788abc1-5550-4a62-8044-fa7ba86109da",
+		"name": "demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14841458"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"account\":\"test123\",\n    \"password\":\"Qweasdzxc123\",\n    \"name\":\"Wilson\",\n    \"email\":\"test123@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"account\":\"test123\",\n    \"password\":\"asdzxcQwe123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/sessions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6IlJPTEVfVVNFUiIsIm5hbWUiOiJXaWxzb24iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0MTIzIiwiaWQiOjEsImVtYWlsIjoidGVzdDEyM0BnbWFpbC5jb20iLCJzdWIiOiJXaWxzb24iLCJpc3MiOiJkZW1vQXBpIiwiaWF0IjoxNzAwMDQ1MzE0LCJleHAiOjE3MDAwNDU2MTR9.hOv5NCLFuTUXXQF-B1r91bpkK3WPtH7d-QYtXVA8wK4SyGDOHq_b9WdAIxGVAbTlEwkM61WTaLX63dz2DPXUOA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "resetPassword",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6IlJPTEVfVVNFUiIsIm5hbWUiOiJXaWxzb24iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0MTIzIiwiaWQiOjEsImVtYWlsIjoidGVzdDEyM0BnbWFpbC5jb20iLCJzdWIiOiJXaWxzb24iLCJpc3MiOiJkZW1vQXBpIiwiaWF0IjoxNzAwMDQ1NzExLCJleHAiOjE3MDAwNDYwMTF9._l4KhsWOCM78QmuWPFXIOMtttPde5vFOimM4SX-Jo9uBRM_kfNfGKEJkbSN-k78FwsBXxWhoaIoqRvLsdcwYwA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currentPassword\":\"Qweasdzxc123\",\n    \"newPassword\":\"asdzxcQwe123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/users/1/password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"1",
+						"password"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
