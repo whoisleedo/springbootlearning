@@ -1,4 +1,4 @@
-## 1. Data Schema
+## 1. Data Schema 
 
 ### table name: account
 
